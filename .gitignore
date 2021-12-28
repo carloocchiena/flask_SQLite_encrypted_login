@@ -130,3 +130,7 @@ dmypy.json
 
 # User DB
 user_data.db
+
+# Testing on Jupyter Notebook
+test.ipynb
+
