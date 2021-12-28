@@ -1,2 +1,2 @@
-# flask_SQLite_encrypted_login
-Login and logon web form with data encryption
+# Flask + SQLite encrypted login
+Sign in and sign up web form with data encryption
