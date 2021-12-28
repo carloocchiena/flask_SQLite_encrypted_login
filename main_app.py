@@ -11,7 +11,7 @@ app.config["DEBUG"] = True
 def page_not_found(e):
     return "<h1>OOPS</h1> <p> Page not found </p>", 404
 
-# render signin page (to be completed)
+# render signin page (to be checked)
 @app.route('/signin', methods = ["GET", "POST"])
 def signin():
     
@@ -27,8 +27,17 @@ def signin():
         secure_name = hashlib.sha256(user_name.encode('utf-8')).hexdigest()
         secure_password = hashlib.sha256(user_password.encode('utf-8')).hexdigest()
         
-        # check validity of password
-        if user_password == "":
+        # check if username already exist
+        if user_name != "":
+            for user in retrieve_users():
+                if user[1] == secure_name:
+                    error = "[!] Username already exist"
+                
+        # formal check over username and password
+        elif user_name == "":
+            error = "[!] Username cannot be empty!"
+       
+        elif user_password == "":
             error = "[!] Password cannot be empty!"
         
         elif len(user_password) < 8:
@@ -40,24 +49,16 @@ def signin():
         elif not any(char.isupper() for char in user_password):
             error = "[!] Password must contain at least an uppercase letter"
         
-        elif not any(char=="" for char in user_password):
+        elif any(char==" " for char in user_password):
             error = "[!] Password cannot contain empty spaces"
         
-        elif not any(char=="!@#$%^&*()" for char in user_password):
+        elif not any(char in "!@#$%^&*()" for char in user_password):
             error = "[!] Password must contain at least one special character"
-                                
-        # check validity of username
-        elif user_name == "":
-            error = "[!] Username cannot be empty!"
-        
-        # check if username exists in DB
-        elif secure_name in retrieve_users():
-            error = "[!] Username already exist!"
         
         # if no error, insert user and password into DB
         else:
-            upload_user = insert_user(secure_name, secure_password)
-            error = upload_user
+            insert_user(secure_name, secure_password)
+            error = "[*] User Inserted!"
 
     # if no error, redirect to signin page   
     return render_template("signin.html", error=error)
