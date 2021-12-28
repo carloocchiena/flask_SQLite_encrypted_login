@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # User DB
-#user_data.db
+user_data.db
