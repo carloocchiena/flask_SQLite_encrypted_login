@@ -14,7 +14,7 @@ def insert_user(user_name, user_password, db=DB):
     # connect to the database
     db_connection = None
     
-    # try the query and commit   
+    # try the query and commit
     try:
         db_connection = sqlite3.connect(db)
         cursor = db_connection.cursor()
@@ -60,7 +60,6 @@ def retrieve_users(db=DB):
         print("[*] Users Retrieved!")
         db_connection.close()
         
-        print(users)
         return users
     
     except Exception as e:

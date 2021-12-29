@@ -134,3 +134,6 @@ user_data.db
 # Testing on Jupyter Notebook
 test.ipynb
 
+# Garbage collector
+bin.md
+

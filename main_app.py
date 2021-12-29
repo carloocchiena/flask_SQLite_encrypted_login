@@ -16,6 +16,7 @@ def page_not_found(e):
 def signup():
     
     message = ""
+    existing_user = retrieve_users()
     
     if request.method == "POST":
         
@@ -28,7 +29,7 @@ def signup():
         secure_password = hashlib.sha256(user_password.encode('utf-8')).hexdigest()
                
         # formal check over username and password
-        # empyy username
+        # empty username
         if user_name == "":
             message = "[!] Username cannot be empty!"
         
@@ -40,11 +41,11 @@ def signup():
         elif len(user_password) < 8:
             message = "[!] Password must be at least 8 characters long!"
         
-        # password with digits
+        # password with no digits
         elif not any(char.isdigit() for char in user_password):
             message = "[!] Password must contain at least a number"
         
-        # password with uppercase
+        # password with no uppercase
         elif not any(char.isupper() for char in user_password):
             message = "[!] Password must contain at least an uppercase letter"
         
@@ -52,16 +53,14 @@ def signup():
         elif any(char==" " for char in user_password):
             message = "[!] Password cannot contain empty spaces"
         
-        # password with special characters
+        # password with no special characters
         elif not any(char in "!@#$%^&*()" for char in user_password):
             message = "[!] Password must contain at least one special character"
         
-        # user already exists    (forse la funzione retrieve uccide tutto, da modificare)
-        elif user_name != "":
-            for user in retrieve_users():
-                if user[1] == secure_name:
-                    message = "[!] Username already exist"
-            
+        # user already exists
+        elif any(user[1] in secure_name for user in existing_user):
+            message = "[!] Username already exist"
+                     
         # if no error, insert user and password into DB
         else:
             insert_user(secure_name, secure_password)
@@ -75,6 +74,7 @@ def signup():
 def signin():
 
     message = ""
+    existing_user = retrieve_users()
     
     if request.method == "POST":
         psw = request.form['password']
