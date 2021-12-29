@@ -60,6 +60,7 @@ def retrieve_users(db=DB):
         print("[*] Users Retrieved!")
         db_connection.close()
         
+        print(users)
         return users
     
     except Exception as e:
@@ -67,5 +68,6 @@ def retrieve_users(db=DB):
         return f"[!] DB connection aborted! Error:{e}"
 
 if __name__ == '__main__':
-    insert_user("dummy_user", "admin")
+    # insert_user("dummy_user", "admin")
     retrieve_users()
+    
