@@ -38,7 +38,37 @@ def insert_user(user_name, user_password, db=DB):
     except sqlite3.Error as e:
         print(f"[!] SQL error! Error:{e}")
         return f"[!] SQL error! Error:{e}"
+
+# connect to our database and retrieve all usernames    
+def retrieve_username(db=DB):
+    """Retrieve usernames from the users table
+    :param db:
+    :return: username
+    """
+    db_connection = None
     
+    try:
+        db_connection = sqlite3.connect(db)
+        cursor = db_connection.cursor()
+        
+        print("[*] DB Connection Successful!")
+        
+        sql = '''SELECT username FROM users'''
+            
+        cursor.execute(sql)
+        users = cursor.fetchall()
+        db_connection.commit()
+        print("[*] Users Retrieved!")
+        db_connection.close()
+        
+        print(users)
+        return users
+    
+    except Exception as e:
+        print(f"[!] DB connection aborted! Error:{e}")
+        return f"[!] DB connection aborted! Error:{e}"
+
+# connect to our database and retrieve all userdata    
 def retrieve_users(db=DB):
     """Retrieve all users from the users table
     :param db:
@@ -69,4 +99,5 @@ def retrieve_users(db=DB):
 if __name__ == '__main__':
     # insert_user("dummy_user", "admin")
     retrieve_users()
+    retrieve_username()
     

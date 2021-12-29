@@ -1,7 +1,7 @@
 import hashlib
 from flask import Flask, request, render_template
 
-from manage_user import insert_user, retrieve_users
+from manage_user import insert_user, retrieve_username, retrieve_users
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -15,8 +15,11 @@ def page_not_found(e):
 @app.route('/signup', methods = ["GET", "POST"])
 def signup():
     
+    # create the var to handle user messages
     message = ""
-    existing_user = retrieve_users()
+    
+    # retrieve all encrypted usernames
+    existing_user = retrieve_username()
     
     if request.method == "POST":
         
@@ -58,7 +61,7 @@ def signup():
             message = "[!] Password must contain at least one special character"
         
         # user already exists
-        elif any(user[1] in secure_name for user in existing_user):
+        elif any(user[0] in secure_name for user in existing_user):
             message = "[!] Username already exist"
                      
         # if no error, insert user and password into DB
