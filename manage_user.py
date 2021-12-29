@@ -1,6 +1,6 @@
 import sqlite3
 
-DB = "D:\\Carlo\\Python\\Scripts\\web_app\\flask_SQLite_encrypted_login\\user_data.db"
+DB = "user_data.db"
 
 # connect to our database and insert a new user
 def insert_user(user_name, user_password, db=DB):
