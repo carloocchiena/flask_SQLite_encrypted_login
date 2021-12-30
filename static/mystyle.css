@@ -55,10 +55,10 @@ h2 {
    float: right;
    color: black;
    text-align: center;
-   padding: 35px 20px 16px 0px;
+   padding: 43px 20px 16px 0px;
    text-decoration: none;
    font-family: Arial, Helvetica, sans-serif;
-   font-size: 20px;
+   font-size: 25px;
 }
   
 .topnav a:hover {
@@ -87,11 +87,12 @@ color: black;
     margin: 25px 0 0 0;
 }
   
-.topnav #logo {
-    float: left;
-    padding: 15px 0px 16px 3%;
-}
-
 .box {
     position:relative;
+}
+
+.topnav #logo {
+  float: left;
+  padding: 15px 4px 100px 3%;
+  font-size: 50px;
 }
