@@ -90,6 +90,7 @@ def retrieve_users(db=DB):
         print("[*] Users Retrieved!")
         db_connection.close()
         
+        print(users)
         return users
     
     except Exception as e:

@@ -76,17 +76,29 @@ def signup():
 @app.route('/signin', methods = ["GET", "POST"])
 def signin():
 
+    # create the var to handle user messages
     message = ""
+    
+    # retrieve all encrypted users
     existing_user = retrieve_users()
     
     if request.method == "POST":
-        psw = request.form['password']
         
-        if psw == "PASSWORD":
-            user_list = retrieve_users()
-        else:
-            invalid = "[!!!] Wrong password"
-  
+        # get username and password from form
+        user_name = request.form["username"]
+        user_password = request.form['password']
+        
+        # hash the user name and password
+        secure_name = hashlib.sha256(user_name.encode('utf-8')).hexdigest()
+        secure_password = hashlib.sha256(user_password.encode('utf-8')).hexdigest()
+        
+        # check if user exists and match with password
+        for user in existing_user:
+            if user[1] == secure_name and user[2] == secure_password:
+                message = "[*] User Authenticated!"
+            else:
+                message = "[!] Username or password is incorrect!"
+         
     return render_template("signin.html", message=message)
 
 # render main page
