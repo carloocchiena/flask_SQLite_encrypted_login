@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 # salt keyword (prod: store it in a .env file)
-SALT = "a!M@7p*eUUDRHt"
+SALT = "mdcbb3Z%6^o7GBiXXbMfJ@98&HgudE2WvHU$et5F"
 
 # render error page 404
 @app.errorhandler(404)
