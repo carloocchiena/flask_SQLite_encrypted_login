@@ -14,7 +14,7 @@ SALT = "a!M@7p*eUUDRHt"
 def page_not_found(e):
     return "<h1>OOPS</h1> <p> Page not found </p>", 404
 
-# render signup page (to be checked)
+# render signup page
 @app.route('/signup', methods = ["GET", "POST"])
 def signup():
     
