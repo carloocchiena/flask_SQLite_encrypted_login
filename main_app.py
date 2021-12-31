@@ -6,6 +6,9 @@ from manage_user import insert_user, retrieve_username, retrieve_users
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
+# salt keyword (prod: store it in a .env file)
+SALT = "a!M@7p*eUUDRHt"
+
 # render error page 404
 @app.errorhandler(404)
 def page_not_found(e):
@@ -29,7 +32,7 @@ def signup():
         
         # hash the user name and password
         secure_name = hashlib.sha256(user_name.encode('utf-8')).hexdigest()
-        secure_password = hashlib.sha256(user_password.encode('utf-8')).hexdigest()
+        secure_password = hashlib.sha256((user_password+SALT).encode('utf-8')).hexdigest()
                
         # formal check over username and password
         # empty username
@@ -90,7 +93,7 @@ def signin():
         
         # hash the user name and password
         secure_name = hashlib.sha256(user_name.encode('utf-8')).hexdigest()
-        secure_password = hashlib.sha256(user_password.encode('utf-8')).hexdigest()
+        secure_password = hashlib.sha256((user_password+SALT).encode('utf-8')).hexdigest()
         
         # check if user exists and match with password
         for user in existing_user:
